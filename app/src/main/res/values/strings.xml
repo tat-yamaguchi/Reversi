@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Kotlin + MVPでリバーシ</string>
+
+    <string name="text_current_player_black">「黒」のターンです</string>
+    <string name="text_current_player_white">「白」のターンです</string>
+
+    <string name="text_black_win">「黒」の勝利です</string>
+    <string name="text_white_win">「白」の勝利です</string>
+    <string name="text_draw">引き分けです</string>
+
+    <string name="text_game_finished">ゲーム終了です</string>
+
+    <string name="fmt_text_black_count">黒：%1$d個</string>
+    <string name="fmt_text_white_count">白：%1$d個</string>
+
+    <string name="text_select_ai">AIの種類を選択してください</string>
+    <string name="text_select_player_color">石の色を選択してください\n (黒が先攻です)</string>
+
+    <string name="text_ai_simple">シンプル</string>
+    <string name="text_ai_normal1">通常1</string>
+    <string name="text_ai_normal2">通常2</string>
+
+    <string name="text_player_black">黒(先攻)</string>
+    <string name="text_player_white">白(後攻)</string>
+
+    <string name="text_btn_game_start">ゲーム開始</string>
+</resources>

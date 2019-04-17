@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:minHeight="32dp"
+        android:padding="2dp"
+        android:gravity="start|center_vertical"
+        android:text="@string/text_select_ai"/>
+    <Spinner
+        android:id="@+id/spinner_ai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="32dp"
+        android:padding="2dp"
+        android:textSize="24sp"/>
+
+    <include layout="@layout/divider"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp"
+        android:minHeight="32dp"
+        android:textSize="24sp"
+        android:gravity="start|center_vertical"
+        android:text="@string/text_select_player_color"/>
+    <Spinner
+        android:id="@+id/spinner_color"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="32dp"
+        android:padding="2dp"
+        android:textSize="24sp"/>
+
+    <include layout="@layout/divider"/>
+
+    <Button
+        android:id="@+id/btn_game_start"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="32dp"
+        android:minWidth="128dp"
+        android:textSize="32sp"
+        android:padding="8dp"
+        android:layout_gravity="bottom"
+        android:gravity="center"
+        android:text="@string/text_btn_game_start"/>
+</LinearLayout>
