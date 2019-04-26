@@ -1,5 +1,12 @@
 package jp.taty.reversi
 
+import android.os.Handler
+import android.os.Looper
+import java.util.concurrent.Executor
+
+/**
+ * アプリ全体で使用するクラス群を定義する
+ */
 class Reversi {
 
     companion object{
@@ -84,4 +91,18 @@ class Reversi {
         }
     }
 
+    class Executors {
+
+        val main: Executor = MainThreadExecutor()
+        val thread: Executor = java.util.concurrent.Executors.newSingleThreadExecutor()
+
+        class MainThreadExecutor: Executor {
+
+            private val mainThreadHandler = Handler(Looper.getMainLooper())
+
+            override fun execute(command: Runnable) {
+                mainThreadHandler.post(command)
+            }
+        }
+    }
 }

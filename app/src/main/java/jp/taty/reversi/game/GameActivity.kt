@@ -5,10 +5,8 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import jp.taty.reversi.R
@@ -27,7 +25,9 @@ class GameActivity: AppCompatActivity(), GameContract.View {
     lateinit var textViewBlackCount: TextView
     lateinit var textViewWhiteCount: TextView
 
-    lateinit override var presenter: GameContract.Presenter
+    override lateinit var presenter: GameContract.Presenter
+
+    lateinit var textViewThinkingMessage: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +49,7 @@ class GameActivity: AppCompatActivity(), GameContract.View {
 
         cellViews = arrayOfNulls<List<ImageView>>(Reversi.BOARD_SIZE).mapIndexed { x, _ ->
             arrayOfNulls<ImageView>(Reversi.BOARD_SIZE).mapIndexed { y, _ ->
-                val cellView = layoutInflater.inflate(R.layout.grid_cell, null).apply{
+                val cellView = layoutInflater.inflate(R.layout.grid_cell, root as ViewGroup, false).apply{
                     setOnClickListener{
                         presenter.onCellSelected(x, y)
                     }
@@ -62,9 +62,14 @@ class GameActivity: AppCompatActivity(), GameContract.View {
         textViewCurrentPlayer = root.findViewById<TextView>(R.id.game_current_player_text)
         textViewBlackCount = root.findViewById<TextView>(R.id.game_black_player_count_text)
         textViewWhiteCount = root.findViewById<TextView>(R.id.game_white_player_count_text)
+        textViewThinkingMessage = root.findViewById<TextView>(R.id.tv_thinking_message)
 
         stoneDrawableBlack = ContextCompat.getDrawable(this, R.drawable.stone_black)!!
         stoneDrawableWhite = ContextCompat.getDrawable(this, R.drawable.stone_white)!!
+
+        root.findViewById<Button>(R.id.btn_game_finish).apply {
+            setOnClickListener { finish() }
+        }
     }
 
     override fun onResume() {
@@ -90,8 +95,8 @@ class GameActivity: AppCompatActivity(), GameContract.View {
 
     override fun updateCandidatePoints(candidates: List<Reversi.Point>) {
 
-        var boardColor = ContextCompat.getColor(this, R.color.boardColor)
-        var boardCandidateColor = ContextCompat.getColor(this, R.color.boardCandidateColor)
+        val boardColor = ContextCompat.getColor(this, R.color.boardColor)
+        val boardCandidateColor = ContextCompat.getColor(this, R.color.boardCandidateColor)
         cellViews.flatten().forEach {
             it.setBackgroundColor(boardColor)
         }
@@ -121,10 +126,10 @@ class GameActivity: AppCompatActivity(), GameContract.View {
         }
     }
 
-    override fun showResult(result: Reversi.Result, blackCount: Int, whiteCount: Int) {
+    override fun gameFinish(result: Reversi.Result, blackCount: Int, whiteCount: Int) {
         val text = when(result) {
             Reversi.Result.BlackWin -> getString(R.string.text_black_win)
-            Reversi.Result.WhiteWin -> getString(R.string.text_black_win)
+            Reversi.Result.WhiteWin -> getString(R.string.text_white_win)
             else -> getString(R.string.text_draw)
         }
         textViewCurrentPlayer.text = text
@@ -132,10 +137,21 @@ class GameActivity: AppCompatActivity(), GameContract.View {
         AlertDialog.Builder(this)
             .setTitle(R.string.text_game_finished)
             .setMessage(text)
-            .setPositiveButton(android.R.string.ok){ dialog, which ->
-                finish()
+            .setPositiveButton(android.R.string.ok){ dialog, _ ->
+                dialog.cancel()
             }.show()
         Toast.makeText(this, "$text $blackCount vs $whiteCount", Toast.LENGTH_LONG).show()
     }
 
+    override fun showPassedMessage(player: Reversi.CellState) {
+        Toast.makeText(this, getString(R.string.text_message_passed), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun beginThinking() {
+        textViewThinkingMessage.visibility = View.VISIBLE
+    }
+
+    override fun endThinking() {
+        textViewThinkingMessage.visibility = View.INVISIBLE
+    }
 }

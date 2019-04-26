@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import jp.taty.reversi.BaseAI
 import jp.taty.reversi.R
 import jp.taty.reversi.Reversi
 import jp.taty.reversi.game.GameActivity
@@ -70,23 +69,15 @@ class EntryActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupAISpinner(spinner: Spinner) {
-        var adapter = ArrayAdapter<AISpinnerItem>(this, android.R.layout.simple_spinner_item)
-        AIModel.aiList.forEach {
-            adapter.add(AISpinnerItem(it.aiName, getString(it.displayNameResId)))
-        }
-        spinner.adapter = adapter;
-1    }
-
     class AISpinnerItem(val aiName: Reversi.AINames, val displayText: String) {
         override fun toString(): String {
-            return displayText;
+            return displayText
         }
     }
 
     class PlayerSpinnerItem(val color: Reversi.CellState, val displayText: String) {
         override fun toString(): String {
-            return displayText;
+            return displayText
         }
     }
 }

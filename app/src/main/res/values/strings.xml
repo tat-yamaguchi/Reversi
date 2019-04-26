@@ -24,4 +24,13 @@
     <string name="text_player_white">白(後攻)</string>
 
     <string name="text_btn_game_start">ゲーム開始</string>
+
+    <string name="text_passed">石を置けないのでパスします</string>
+
+    <string name="text_info_thinking">思考中</string>
+    <string name="text_info_player_turn">あなたのターンです</string>
+
+    <string name="text_message_passed">パスしました</string>
+
+    <string name="text_btn_game_finish">ゲーム終了</string>
 </resources>

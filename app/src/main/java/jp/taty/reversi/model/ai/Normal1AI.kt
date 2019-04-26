@@ -5,6 +5,10 @@ import jp.taty.reversi.R
 import jp.taty.reversi.Reversi
 import jp.taty.reversi.model.ReversiCondition
 
+/**
+ * 通常のAI 1
+ * 石を置ける場所のうち、一番多くひっくり返せる場所に置く
+ */
 class Normal1AI: BaseAI {
 
     override val aiName = Reversi.AINames.Normal1
@@ -17,9 +21,12 @@ class Normal1AI: BaseAI {
     }
 
     override fun compute(condition: ReversiCondition): Reversi.Point {
+        // 早すぎるので考えてる感を出すために1秒寝る
+        Thread.sleep(1000)
+
         val candidates = condition.getCandidateCells(playerColor)
-        var maxCell = candidates.maxBy { c -> simulateReverseCount(condition, c.x, c.y) }
-        return Reversi.Point(maxCell!!.x, maxCell!!.y)
+        val maxCell = candidates.maxBy { c -> simulateReverseCount(condition, c.x, c.y) }!!
+        return Reversi.Point(maxCell.x, maxCell.y)
     }
 
     private fun simulateReverseCount(condition: ReversiCondition, x: Int, y: Int): Int {
@@ -47,7 +54,7 @@ class Normal1AI: BaseAI {
                 if (condition.cells[point.x][point.y].state == enemy) {
                     reverseCount++
                 } else {
-                    break;
+                    break
                 }
             }
         }

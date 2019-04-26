@@ -113,7 +113,7 @@ class ReversiCondition {
                     cells[point.x][point.y].state = player
                     isDirty = true
                 } else {
-                    break;
+                    break
                 }
             }
         }
@@ -122,7 +122,7 @@ class ReversiCondition {
     /** blackCells, whiteCells, BlankCellsを必要に応じて生成しなおす */
     private fun updateCacheIfNecessary() {
         if (isDirty) {
-            isDirty = false;
+            isDirty = false
             blackCells = cells.flatten().filter { it.state == Reversi.CellState.Black }
             whiteCells = cells.flatten().filter { it.state == Reversi.CellState.White }
             blankCells = cells.flatten().filter { it.state == Reversi.CellState.None }
@@ -135,9 +135,10 @@ class ReversiCondition {
     fun getCandidateCells(player: Reversi.CellState): List<Reversi.Cell>{
         // 本来指定されるはずがないが、Noneが指定された場合は候補なしで返す
         if(player == Reversi.CellState.None) return listOf()
-        return blankCells.filter {
+        val candidates = blankCells.filter {
             isCandidateCells(player, it.x, it.y)
         }
+        return candidates
     }
 
     /**
@@ -159,6 +160,13 @@ class ReversiCondition {
                         isCandidateCell(player, cell.linePointsUpRight) ||
                         isCandidateCell(player, cell.linePointsDownRight) ||
                         isCandidateCell(player, cell.linePointsDownLeft))
+
+        /*
+           TODO:こんな感じで書けるようにする
+           cell.allLines().also {
+               isCandidateCell(player, it)
+           }
+         */
     }
 
     /**
@@ -183,6 +191,6 @@ class ReversiCondition {
                 }
             }
         }
-        return false;
+        return false
     }
 }

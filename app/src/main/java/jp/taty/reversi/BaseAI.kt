@@ -15,9 +15,9 @@ interface BaseAI {
 
     /**
      * AIを初期化する
-     * @param playerColor AIの石の色
+     * @param color AIの石の色
      */
-    fun initialize(playerColor: Reversi.CellState)
+    fun initialize(color: Reversi.CellState)
 
     /**
      * 次の一手を計算する

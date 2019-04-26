@@ -5,6 +5,10 @@ import jp.taty.reversi.R
 import jp.taty.reversi.Reversi
 import jp.taty.reversi.model.ReversiCondition
 
+/**
+ * 通常のAI 2
+ * セル毎に重みを付け、ひっくり返せる数も考慮し、置く場所を決定する。
+ */
 class Normal2AI: BaseAI {
 
     override val aiName = Reversi.AINames.Normal2
@@ -17,9 +21,12 @@ class Normal2AI: BaseAI {
     }
 
     override fun compute(condition: ReversiCondition): Reversi.Point {
+        // 早すぎるので考えてる感を出すために1秒寝る
+        Thread.sleep(1000)
+
         val candidates = condition.getCandidateCells(playerColor)
-        var maxCell = candidates.maxBy { c -> calcScore(condition, c.x, c.y) }
-        return Reversi.Point(maxCell!!.x, maxCell!!.y)
+        val maxCell = candidates.maxBy { c -> calcScore(condition, c.x, c.y) }!!
+        return Reversi.Point(maxCell.x, maxCell.y)
     }
 
     /**
@@ -56,7 +63,7 @@ class Normal2AI: BaseAI {
                 if (condition.cells[point.x][point.y].state == enemy) {
                     reverseCount++
                 } else {
-                    break;
+                    break
                 }
             }
         }
